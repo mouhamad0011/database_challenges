@@ -1,0 +1,84 @@
+challenge 1:
+. mysql -u root
+. CREATE DATABASE schoolDB;
+. USE schoolDB;
+. SHOW DATABASES;
+
+
+challenge 2:
+. CREATE TABLE teachers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    subject VARCHAR(255)
+  );
+. SHOW TABLES;
+. INSERT INTO teachers(id, first_name, last_name, subject)
+    VALUES (1, 'John', 'Doe', 'Math'),
+           (2, 'Jane', 'Smith', 'Science');
+. DESCRIBE teachers;
+
+
+
+challenge 3:
+. SELECT * FROM teachers;
+. SELECT first_name,subject from teachers;
+
+
+
+challenge 4:
+. SELECT students.first_name, students.last_name, teachers.first_name, teachers.last_name
+  FROM students
+  INNER JOIN teachers ON students.teacher_id = teachers.id;
+. SELECT students.first_name, students.last_name, teachers.first_name, teachers.last_name
+  FROM students
+  LEFT JOIN teachers ON students.teacher_id = teachers.id;
+. SELECT students.first_name, students.last_name, teachers.first_name, teachers.last_name
+  FROM students
+  RIGHT JOIN teachers ON students.teacher_id = teachers.id;
+. SELECT students.first_name AS student_first_name,
+       students.last_name AS student_last_name,
+       teachers.first_name AS teacher_first_name,
+       teachers.last_name AS teacher_last_name
+    FROM students
+    LEFT JOIN teachers ON students.teacher_id = teachers.id
+UNION
+  SELECT students.first_name AS student_first_name,
+       students.last_name AS student_last_name,
+       teachers.first_name AS teacher_first_name,
+       teachers.last_name AS teacher_last_name
+    FROM students
+    RIGHT JOIN teachers ON students.teacher_id = teachers.id;
+
+
+challenge 5:
+
+. CREATE TABLE Authors (
+    AuthorID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    DateOfBirth DATE,
+    Nationality VARCHAR(255)
+  );
+
+. CREATE TABLE Publishers (
+    PublisherID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Address TEXT,
+    PhoneNumber VARCHAR(20),
+    Email VARCHAR(255) UNIQUE
+  );
+
+. CREATE TABLE Books (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255),
+    ISBN VARCHAR(20) UNIQUE,
+    PublicationDate DATE,
+    Genre VARCHAR(255),
+    NumberOfPages INT,
+    Availability BOOLEAN,
+    AuthorID INT,
+    PublisherID INT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID),
+    FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID)
+  );

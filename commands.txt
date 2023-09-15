@@ -1,0 +1,12 @@
+challenge 1:
+
+. nmp init -y
+. node app.js
+
+challenge 2:
+
+. node app.js
+
+challenge 3:
+
+.
